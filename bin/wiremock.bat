@@ -1,0 +1,1 @@
+java -jar %~dp0\wiremock-1.46-standalone.jar --root-dir=%~dp0\..\tests\files\wiremock --verbose --port 3002
