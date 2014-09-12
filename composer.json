@@ -1,0 +1,36 @@
+{
+  "name":"webforge\/trello",
+  "description":"Access the trello.com API",
+  "require":{
+    "symfony/dependency-injection":"2.5.*",
+    "symfony/config": "2.5.*",
+    "symfony/yaml": "2.5.*",
+
+    "guzzle/guzzle": "3.9.*",
+    "guzzlehttp/oauth-subscriber": "0.1.*"
+  },
+  "license":"MIT",
+  "authors":[
+    {
+      "name":"Philipp Scheit",
+      "email":"p.scheit@ps-webforge.com"
+    }
+  ],
+  "minimum-stability":"dev",
+  "autoload":{
+    "psr-0":{
+      "Webforge\\Trello":[
+        "src\/php\/",
+        "tests\/php\/"
+      ]
+    }
+  },
+  "extra":{
+    "branch-alias":{
+      "dev-master":"1.0.x-dev"
+    }
+  },
+  "require-dev": {
+    "webforge/testplate": "1.*"
+  }
+}
