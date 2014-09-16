@@ -8,6 +8,10 @@ class ApiTest extends \Webforge\ProjectStack\Test\Base {
     $this->chainClass = __NAMESPACE__ . '\\Api';
     parent::setUp();
 
+    // always create a new symfony container with a new reference to the trello.api
+    $this->resetAndBootKernel();
+
+    // set doctrine from the current symfony container
     $this->initHelper();
 
     $this->api = $this->get('trello.api');
@@ -39,6 +43,15 @@ class ApiTest extends \Webforge\ProjectStack\Test\Base {
     $this->api->synchronizeMyBoards();
     $this->api->flush();
 
+    $this->api->synchronizeMyBoards();
+    $this->api->flush();
+
+    $this->assertBoardsInDB(array('tiptoi', 'Welcome Board'));
+  }
+
+  public function testSynchingTwiceWithoutFlushesIsPossible() {
+    $this->resetDatabaseOnNextTest();
+    $this->api->synchronizeMyBoards();
     $this->api->synchronizeMyBoards();
     $this->api->flush();
 
