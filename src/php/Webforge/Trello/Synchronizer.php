@@ -22,9 +22,24 @@ class Synchronizer {
 
   protected function synchronize($fqn, $data, $options) {
     $options = (object) $options;
-    $entity = $fqn::fromData($data);
 
-    $this->em->persist($entity);
+    if (!$this->isSynchronized($fqn, $data, $options)) {
+      $entity = $fqn::fromData($data);
+      $this->em->persist($entity);
+    }
+  }
+
+  protected function isSynchronized($fqn, $data, \stdClass $options) {
+    $qb = $this->em->getRepository($fqn)
+      ->createQueryBuilder('entity')
+      ->select('entity');
+
+    foreach ($options->uniques as $field) {
+      $qb->andWhere($qb->expr()->eq('entity.'.$field, ':'.$field));
+      $qb->setParameter($field, $data->$field);
+    }
+
+    return $qb->getQuery()->getOneOrNullResult();
   }
 
   public function flush() {
