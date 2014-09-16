@@ -1,3 +1,5 @@
 /composer.lock
 /vendor
 /etc/symfony/parameters.yml
+/files/cache
+/files/logs
