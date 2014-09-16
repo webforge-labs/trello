@@ -1,1 +1,1 @@
-java -jar %~dp0\wiremock-1.46-standalone.jar --root-dir=%~dp0\..\tests\files\wiremock --verbose --record-mappings --proxy-all="https://api.trello.com/1" --port 3002
+java -jar %~dp0\wiremock-1.46-standalone.jar --root-dir=%~dp0\..\tests\files\wiremock --verbose --record-mappings --proxy-all="https://api.trello.com" --port 3002

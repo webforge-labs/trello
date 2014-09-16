@@ -1,0 +1,5 @@
+parameters:
+  trello_api_key: 576aa9cd68248a449e4eb1e6b0409644
+  trello_api_secret: 1cdd0050492d40612fb3023b047bd980eb8dfd2c9c3716b014ac284072b93bf4
+  #https://trello.com/1/authorize?response_type=token&key=576aa9cd68248a449e4eb1e6b0409644&scope=read,write&expiration=never&name=webforge-ci
+  trello_api_token:  b94c96984f21640f796a2af6d89586de86ef84e725bc4b4f731253643b18d10e

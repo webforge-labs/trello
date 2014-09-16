@@ -9,12 +9,16 @@ $autoLoader = require_once __DIR__.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARA
 $container = new ContainerBuilder();
 
 if (defined('phpunit')) {
-  $container->setParameter('http_endpoint', 'http://localhost:3002');
+  $parameters = 'parameters-webforge-ci.yml';
+  //$container->setParameter('http_endpoint', 'http://localhost:3002/1/');
+  $container->setParameter('http_endpoint', 'https://api.trello.com/1/');
 } else {
-  $container->setParameter('http_endpoint', 'https://api.trello.com/1');
+  $parameters = 'parameters.yml';
+  $container->setParameter('http_endpoint', 'https://api.trello.com/1/');
 }
 
 $loader = new YamlFileLoader($container, new FileLocator(__DIR__.DIRECTORY_SEPARATOR.'etc'.DIRECTORY_SEPARATOR.'symfony'));
+$loader->load($parameters);
 $loader->load('services.yml');
 
 return $GLOBALS['env']['container'] = $container;
