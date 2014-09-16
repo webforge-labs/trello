@@ -1,14 +1,6 @@
 {
   "name":"webforge\/trello",
   "description":"Access the trello.com API",
-  "require":{
-    "symfony/dependency-injection":"2.5.*",
-    "symfony/config": "2.5.*",
-    "symfony/yaml": "2.5.*",
-
-    "guzzle/guzzle": "3.9.*",
-    "guzzlehttp/oauth-subscriber": "0.1.*"
-  },
   "license":"MIT",
   "authors":[
     {
@@ -17,6 +9,13 @@
     }
   ],
   "minimum-stability":"dev",
+  "require":{
+    "webforge/project-stack": "1.2.*",
+    "guzzlehttp/guzzle": "4.2.*"
+  },
+  "require-dev": {
+    "webforge/testplate": "1.*"
+  },
   "autoload":{
     "psr-0":{
       "Webforge\\Trello":[
@@ -26,11 +25,12 @@
     }
   },
   "extra":{
+    "directory-locations": {
+      "doctrine-entities": "src/php/Webforge/Trello/Entities"
+    },
+
     "branch-alias":{
       "dev-master":"1.0.x-dev"
     }
-  },
-  "require-dev": {
-    "webforge/testplate": "1.*"
   }
 }

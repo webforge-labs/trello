@@ -1,0 +1,20 @@
+{
+  "namespace": "Webforge\\Trello\\Entities",
+  "entities": [
+    {
+      "name": "Board",
+
+      "properties": {
+        "id": { "type": "String" },
+        "name": { "type": "String" },
+        "desc": { "type": "String", "nullable": true },
+        "descData": { "type": "String", "nullable": true },
+        "closed": { "type": "Boolean" },
+        "idOrganization": { "type": "String", "nullable": true },
+        "pinned": { "type": "Boolean" },
+        "url": { "type": "String" },
+        "shortUrl": { "type": "String" }
+      }
+    }
+  ]
+}

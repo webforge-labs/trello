@@ -1,0 +1,33 @@
+doctrine:
+  orm:
+    auto_generate_proxy_classes: true
+    proxy_namespace: Proxies
+    proxy_dir: %kernel.cache_dir%/files/cache/doctrine/proxies
+
+    entity_managers:
+      default:
+        auto_mapping: true
+        metadata_cache_driver: array
+        query_cache_driver: array
+        result_cache_driver: array
+
+        connection: default
+        mappings:
+          project_entities:
+            mapping:              true
+            type:                 annotation
+            dir:                  %webforge.project.directory-locations.doctrine-entities%
+            prefix:               %webforge.project.namespace%\Entities
+            is_bundle:            false
+
+  dbal:
+    default_connection: default
+    connections:
+
+      default:
+        driver:   %database_driver%
+        host:     %database_host%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset: UTF8

@@ -1,0 +1,7 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: trello
+    database_user: trello
+    database_password: dp5Trr8Ux5CeAed8

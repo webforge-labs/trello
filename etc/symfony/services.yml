@@ -1,15 +1,16 @@
 services:
-  http.oauth: 
-    class: GuzzleHttp\Subscriber\Oauth\Oauth1
-    arguments: [{ consumer_key: %trello_api_token%, consumer_secret: %trello_api_secret% }]
-
-  http.client.emitter:
-    class: ~
-    factory_service: http.client
-    factory_method: getEmitter
-    calls:
-      - [attach, ["@http.oauth"]]
+#  http.oauth: 
+#    class: GuzzleHttp\Subscriber\Oauth\Oauth1
+#    arguments: [{ consumer_key: %trello_api_token%, consumer_secret: %trello_api_secret% }]
+#
+#  http.client.emitter:
+#    class: ~
+#    factory_service: http.client
+#    factory_method: getEmitter
+#    calls:
+#      - [attach, ["@http.oauth"]]
 
   http.client:
     class: GuzzleHttp\Client
     arguments: [{ base_url: %http_endpoint%, defaults: { query: { key: %trello_api_key%, token: %trello_api_token% } } }]
+

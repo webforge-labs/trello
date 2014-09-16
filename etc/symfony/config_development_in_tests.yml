@@ -1,0 +1,3 @@
+imports:
+  - { resource: parameters-webforge-ci.yml }
+  - { resource: config.yml }

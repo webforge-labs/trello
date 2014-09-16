@@ -1,0 +1,35 @@
+imports:
+    - { resource: parameters-db.yml }
+    - { resource: services.yml }
+    - { resource: parts/doctrine.yml }
+    #- { resource: parts/fos_rest.yml }
+    - { resource: parts/serializer.yml }
+    #- { resource: parts/sensio_framework_extra.yml }
+    - { resource: "../../vendor/webforge/project-stack/etc/symfony/services.yml" }
+    #- { resource: "D:/www/webforge-project-stack/etc/symfony/services.yml" }
+
+parameters:
+  http_endpoint: 'https://api.trello.com/1/'
+  secret: a2f5350a7e5ab
+  locale: de
+
+framework:
+    secret: %secret%
+    templating:
+        engines: ['mustache', 'twig']
+    default_locale: "%locale%"
+    router:
+        resource: "%kernel.root_dir%/etc/symfony/routing.yml"
+        strict_requirements: ~
+    http_method_override: true
+#   translator:      { fallback: %locale% }    
+#   form:            ~
+#   csrf_protection: ~
+#   validation:
+#     enabled: true
+#     enable_annotations: true
+#     api: 2.4
+#
+#    trusted_proxies: ~
+#    session:         ~
+#    fragments:       ~

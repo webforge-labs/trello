@@ -1,0 +1,42 @@
+fos_rest:
+    param_fetcher_listener: force
+
+    routing_loader:
+        default_format: json
+        include_format: false
+
+    view:
+        default_engine: mustache
+        serialize_null: true
+        view_response_listener: true
+        formats:
+          xml: false
+          json: true
+        templating_formats:
+          html: true
+          json: false # enable this to debug exceptions that have no exception trace
+        failed_validation: HTTP_BAD_REQUEST
+
+#        exception_wrapper_handler: SSC\Handler\ExceptionWrapperHandler
+
+    format_listener:
+      rules:
+        # sometimes it got html as application/json header before this-.-
+        - { path: ^/, priorities: [ 'html', 'json', '*/*' ], fallback_format: 'html', prefer_extension: true }
+
+    serializer:
+        serialize_null: true
+
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json # nicht den form to json decoder nehmen der macht aus NULL => string "" und das verwirrt die symfony form
+
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+
+        messages:
+            # alle exceptions hinzufügen, deren text "safe" ist und die an den "user" weitergegeben werden können
+            'Symfony\Component\Security\Core\Exception\AccessDeniedException': true
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true

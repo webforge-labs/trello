@@ -1,24 +1,18 @@
 <?php
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-$autoLoader = require_once __DIR__.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+use Webforge\Common\System\Dir;
 
-$container = new ContainerBuilder();
+/**
+ * Bootstrap and Autoload whole application
+ *
+ * you can use this file to bootstrap for tests or bootstrap for scripts / others
+ */
+$autoLoader = require 'vendor/autoload.php';
 
-if (defined('phpunit')) {
-  $parameters = 'parameters-webforge-ci.yml';
-  //$container->setParameter('http_endpoint', 'http://localhost:3002/1/');
-  $container->setParameter('http_endpoint', 'https://api.trello.com/1/');
-} else {
-  $parameters = 'parameters.yml';
-  $container->setParameter('http_endpoint', 'https://api.trello.com/1/');
-}
+$container = new \Webforge\ProjectStack\BootContainer(__DIR__);
+$container->registerGlobal();
+$container->setAutoLoader($autoLoader);
+$container->init();
 
-$loader = new YamlFileLoader($container, new FileLocator(__DIR__.DIRECTORY_SEPARATOR.'etc'.DIRECTORY_SEPARATOR.'symfony'));
-$loader->load($parameters);
-$loader->load('services.yml');
-
-return $GLOBALS['env']['container'] = $container;
+return $container;
