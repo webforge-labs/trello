@@ -18,12 +18,12 @@
           "name":"name",
           "type":"String"
         },
-        "desc":{
-          "name":"desc",
+        "description":{
+          "name":"description",
           "type":"String"
         },
-        "descData":{
-          "name":"descData",
+        "descriptionData":{
+          "name":"descriptionData",
           "type":"String"
         },
         "closed":{

@@ -12,6 +12,7 @@ parameters:
   http_endpoint: 'https://api.trello.com/1/'
   secret: a2f5350a7e5ab
   locale: de
+  staging_access_token: false
 
 framework:
     secret: %secret%

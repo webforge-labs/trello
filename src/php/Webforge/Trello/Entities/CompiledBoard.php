@@ -30,20 +30,20 @@ abstract class CompiledBoard {
   protected $name;
   
   /**
-   * desc
+   * description
    * @ORM\Column(nullable=true)
    * @Serializer\Expose
    * @Serializer\Type("string")
    */
-  protected $desc;
+  protected $description;
   
   /**
-   * descData
+   * descriptionData
    * @ORM\Column(nullable=true)
    * @Serializer\Expose
    * @Serializer\Type("string")
    */
-  protected $descData;
+  protected $descriptionData;
   
   /**
    * closed
@@ -116,33 +116,33 @@ abstract class CompiledBoard {
   }
   
   /**
-   * @param string $desc
+   * @param string $description
    */
-  public function setDesc($desc = NULL) {
-    $this->desc = $desc;
+  public function setDescription($description = NULL) {
+    $this->description = $description;
     return $this;
   }
   
   /**
    * @return string
    */
-  public function getDesc() {
-    return $this->desc;
+  public function getDescription() {
+    return $this->description;
   }
   
   /**
-   * @param string $descData
+   * @param string $descriptionData
    */
-  public function setDescData($descData = NULL) {
-    $this->descData = $descData;
+  public function setDescriptionData($descriptionData = NULL) {
+    $this->descriptionData = $descriptionData;
     return $this;
   }
   
   /**
    * @return string
    */
-  public function getDescData() {
-    return $this->descData;
+  public function getDescriptionData() {
+    return $this->descriptionData;
   }
   
   /**

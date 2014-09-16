@@ -14,3 +14,10 @@ services:
     class: GuzzleHttp\Client
     arguments: [{ base_url: %http_endpoint%, defaults: { query: { key: %trello_api_key%, token: %trello_api_token% } } }]
 
+  trello.api:
+    class: Webforge\Trello\Api
+    arguments: ["@http.client", "@event_dispatcher", "@trello.synchronizer"]
+
+  trello.synchronizer:
+    class: Webforge\Trello\Synchronizer
+    arguments: ["@event_dispatcher", "@doctrine.orm.entity_manager"]
