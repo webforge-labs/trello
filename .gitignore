@@ -5,3 +5,4 @@
 /files/logs
 /www/assets
 /node_modules
+/src/js/lib/shimney
