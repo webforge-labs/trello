@@ -2,6 +2,7 @@
 
 namespace Webforge\Trello\Entities;
 
+use Webforge\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping AS ORM;
 use JMS\Serializer\Annotation AS Serializer;
 
@@ -84,6 +85,15 @@ abstract class CompiledBoard {
    * @Serializer\Type("string")
    */
   protected $shortUrl;
+  
+  /**
+   * cards
+   * @ORM\OneToMany(mappedBy="board", targetEntity="Webforge\Trello\Entities\Card")
+   * @Serializer\Type("ArrayCollection")
+   * @Serializer\Expose
+   * @Serializer\Type("ArrayCollection")
+   */
+  protected $cards;
   
   /**
    * @param string $id
@@ -220,7 +230,40 @@ abstract class CompiledBoard {
     return $this->shortUrl;
   }
   
+  /**
+   * @param Doctrine\Common\Collections\Collection<Webforge\Trello\Entities\Card> $cards
+   */
+  public function setCards(ArrayCollection $cards) {
+    $this->cards = $cards;
+    return $this;
+  }
+  
+  /**
+   * @return Doctrine\Common\Collections\Collection<Webforge\Trello\Entities\Card>
+   */
+  public function getCards() {
+    return $this->cards;
+  }
+  
+  public function addCard(Card $card) {
+    if (!$this->cards->contains($card)) {
+        $this->cards->add($card);
+    }
+    return $this;
+  }
+  
+  public function removeCard(Card $card) {
+    if ($this->cards->contains($card)) {
+        $this->cards->removeElement($card);
+    }
+    return $this;
+  }
+  
+  public function hasCard(Card $card) {
+    return $this->cards->contains($card);
+  }
+  
   public function __construct() {
-
+    $this->cards = new ArrayCollection();
   }
 }

@@ -11,28 +11,30 @@ class Synchronizer {
 
   public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em) {
     $this->dispatcher = $dispatcher;
-    $this->dispatcher->addListener(Events::BOARD_RECEIVED, array($this, 'receivedBoard'), 0);
+    $this->dispatcher->addListener(Events::BOARD_RECEIVED, array($this, 'receivedEvent'), 0);
+    $this->dispatcher->addListener(Events::CARD_RECEIVED, array($this, 'receivedEvent'), 0);
     $this->em = $em;
 
     $this->objects = array();
   }
 
-  public function receivedBoard(Event $event) {
-    $board = $event->getSubject();
-
-    $this->synchronize('Webforge\Trello\Entities\Board', $board, array('uniques'=>array('id')));
+  public function receivedEvent(Event $event) {
+    $entity = $this->synchronize($event->getFqn(), $event->getSubject(), array('uniques'=>array('id')));
+    $event->setEntity($entity);
   }
 
   protected function synchronize($fqn, $data, $options) {
     $options = (object) $options;
 
     $hash = NULL;
-    if (!$this->isSynchronized($fqn, $data, $options, $hash)) {
+    if (!($entity = $this->isSynchronized($fqn, $data, $options, $hash))) {
       $entity = $fqn::fromData($data);
       $this->em->persist($entity);
 
       $this->objects[$hash] = $entity;
     }
+
+    return $entity;
   }
 
   protected function isSynchronized($fqn, $data, \stdClass $options, &$hash = NULL) {

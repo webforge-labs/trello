@@ -13,7 +13,31 @@
         "idOrganization": { "type": "String", "nullable": true },
         "pinned": { "type": "Boolean" },
         "url": { "type": "String" },
-        "shortUrl": { "type": "String" }
+        "shortUrl": { "type": "String" },
+
+        "cards": { "type": "Collection<Card>" }
+      }
+    },
+
+    {
+      "name": "Card",
+
+      "properties": {
+        "id": { "type": "String" },
+        "board": { "type": "Board" },
+        "name": { "type": "String" },
+        "closed": { "type": "Boolean" },
+        "url": { "type": "String" },
+        "dateLastActivity": { "type": "String" },
+        "description": { "type": "Text", "nullable": true },
+        "descriptionData": { "type": "String", "nullable": true },
+        "email": { "type": "String", "nullable": true },
+        "pos": { "type": "Integer" },
+        "shortLink": { "type": "String", "nullable": true },
+        "shortUrl": { "type": "String", "nullable": true },
+        "due": { "type": "String", "nullable": true },
+        "labels": { "type": "Array" },
+        "subscribed": { "type": "Boolean" }
       }
     }
   ]

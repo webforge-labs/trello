@@ -5,7 +5,9 @@ namespace Webforge\Trello;
 use GuzzleHttp\Message\RequestInterface as HttpRequest;
 use Webforge\Common\JS\JSONConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent as BoardReceivedEvent;
+use Webforge\Trello\Events\EntityReceivedEvent as BoardReceivedEvent;
+use Webforge\Trello\Events\EntityReceivedEvent as CardReceivedEvent;
+use Webforge\Trello\Entities\Board;
 
 class Api {
 
@@ -19,20 +21,38 @@ class Api {
   }
 
   public function synchronizeMyBoards() {
-    $this->requestAndDispatch(
+    $json = $this->send(
       $this->http->createRequest('GET', 'members/my/boards', array('debug'=>false))
     );
-  }
 
-  protected function requestAndDispatch($request, $expect = NULL) {
-    $json = $this->send($request);
-
+    $boards = array();
     foreach ($json as $board) {
       $event = new BoardReceivedEvent($board);
+      $event->setFqn('Webforge\Trello\Entities\Board');
       $event->setName(Events::BOARD_RECEIVED);
       $this->dispatcher->dispatch($event->getName(), $event);
+      $boards[] = $event->getEntity();
     }
 
+    return $boards;
+  }
+
+  public function synchronizeBoardCards(Board $board) {
+    $json = $this->send(
+      $this->http->createRequest('GET', 'boards/'.$board->getId().'/cards', array('debug'=>true))
+    );
+
+    $cards = array();
+    foreach ($json as $card) {
+      $card->board = $board;
+      $event = new CardReceivedEvent($card);
+      $event->setFqn('Webforge\Trello\Entities\Card');
+      $event->setName(Events::CARD_RECEIVED);
+      $this->dispatcher->dispatch($event->getName(), $event);
+      $cards[] = $event->getEntity();
+    }
+
+    return $cards;
   }
 
   protected function send(HttpRequest $request) {
