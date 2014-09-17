@@ -3,3 +3,5 @@
 /etc/symfony/parameters.yml
 /files/cache
 /files/logs
+/www/assets
+/node_modules
