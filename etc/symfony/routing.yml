@@ -1,0 +1,7 @@
+home:
+    path:      /
+    defaults:  { _controller: trello.controller.home:indexAction }
+
+request:
+    path:      /api/request
+    defaults:  { _controller: trello.controller.home:requestAction }

@@ -11,7 +11,8 @@
   "minimum-stability":"dev",
   "require":{
     "webforge/project-stack": "1.2.*",
-    "guzzlehttp/guzzle": "4.2.*"
+    "guzzlehttp/guzzle": "4.2.*",
+    "guzzlehttp/log-subscriber": "~1.0"
   },
   "require-dev": {
     "webforge/testplate": "1.*",
@@ -27,7 +28,14 @@
   },
   "extra":{
     "directory-locations": {
-      "doctrine-entities": "src/php/Webforge/Trello/Entities"
+      "doctrine-entities": "src/php/Webforge/Trello/Entities",
+      "lib": "src/php/",
+      "tests": "tests/php/",
+      "test-files": "tests/files/",
+      "tpl": "Resources/tpl/",
+      "tpl-cache": "files/cache/tpl/",
+      "resources": "Resources/",
+      "alice-fixtures": "tests/files/fixtures/"
     },
 
     "branch-alias":{
