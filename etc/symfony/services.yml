@@ -10,6 +10,11 @@ services:
 #    calls:
 #      - [attach, ["@http.oauth"]]
 
+  trello.controller.home:
+    class: Webforge\Trello\Controller\HomeController
+    calls:
+      - [setContainer, ["@service_container"]]
+
   http.client:
     class: GuzzleHttp\Client
     arguments: [{ base_url: %http_endpoint%, defaults: { query: { key: %trello_api_key%, token: %trello_api_token% } } }]

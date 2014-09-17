@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trello API Tester</title>
+    <link href="/assets/css/min.css" rel="stylesheet">
+    
+  </head>
+  <body id="content">
+    <h1 class="text-center">Api Test</h1>
+
+    <div class="container">
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Request</h3>
+        </div>
+        <div class="panel-body">
+          <select data-bind="value: method" name="method" id="inputMethod" class="form-control">
+            <option value="GET">GET</option>
+          </select>
+
+          <input type="text" name="url" data-bind="value: url" id="inputUrl" class="form-control" required="required">
+
+          <button data-bind="click: send" type="button" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title">Response</h3>
+        </div>
+        <div class="panel-body">
+          <!--ko if: error -->
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Request Error</strong>
+            <div data-bind="html: error"></div>
+          </div>
+          <!--/ko-->
+
+          <pre data-bind="html: response"></pre>
+        </div>
+      </div>
+
+      <!--ko if: debug -->
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">Debug</h3>
+        </div>
+        <div class="panel-body">
+          <pre data-bind="text: debug"></pre>
+        </div>
+      </div>
+      <!--/ko-->
+    </div>
+
+
+    <script src="/assets/js/load-require.js"></script>
+    <script type="text/javascript">
+      require(['knockout', 'jquery', 'lib/superagent', 'JSON'], function(ko, $, request, jsonPolyfill) {
+        var Api = function() {
+          var that = this;
+
+          this.method = ko.observable("GET");
+          this.url = ko.observable('members/my/boards');
+          this.response = ko.observable("none");
+          this.error = ko.observable();
+          this.debug = ko.observable();
+
+          this.send = function(model, e) {
+            e.preventDefault();
+            that.error(undefined);
+            that.response('sending request...');
+
+            request
+              .post('/api/request')
+              .send({ method: that.method(), url: that.url()})
+              .end(function(res) {
+                if (res.header['x-debug']) {
+                  that.debug(res.header['x-debug'].replace(/--br--/g, "\n"));
+                }
+
+                if (res.ok) {
+                  that.response(JSON.stringify(res.body, undefined, 2));
+                } else {
+                  that.error(res.text);
+                  that.response(JSON.stringify(res, undefined, 2));
+                }
+              });
+          };
+        };
+
+        ko.applyBindings(new Api(), document.getElementById('content'));
+      });
+    </script>
+    
+  </body>
+</html>
